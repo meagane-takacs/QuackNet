@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}QuackEntity index{% endblock %}
+
+{% block body %}
+    <h1>QuackEntity index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>Datetime</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for quack_entity in quack_entities %}
+            <tr>
+                <td>{{ quack_entity.id }}</td>
+                <td>{{ quack_entity.content }}</td>
+                <td>{{ quack_entity.datetime ? quack_entity.datetime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('quack_entity_show', {'id': quack_entity.id}) }}">show</a>
+                    <a href="{{ path('quack_entity_edit', {'id': quack_entity.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('quack_entity_new') }}">Create new</a>
+{% endblock %}

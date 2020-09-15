@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New QuackEntity{% endblock %}
+
+{% block body %}
+    <h1>Create new QuackEntity</h1>
+
+    {{ include('quack_entity/_form.html.twig') }}
+
+    <a href="{{ path('quack_entity_index') }}">back to list</a>
+{% endblock %}
