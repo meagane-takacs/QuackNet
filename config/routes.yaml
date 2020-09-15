@@ -4,3 +4,7 @@
 app_quack:
   path: /Quack
   controller: App\Controller\QuackEntityController::index
+
+app_inscription:
+  path: /inscription
+  controller: App\Controller\SecurityController::registration
