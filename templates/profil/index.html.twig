@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfilController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h2>Votre login est {{ app.user.username }}</h2>
+    <h2>Changer votre mot de passe</h2>
+    <h2><label for="name">Mot de passe actuel:</label>
+
+        <input type="text" id="name" name="name" required
+               minlength="4" maxlength="8" size="10"> </h2>
+    <h2><label for="name">Nouveau mot de passe : </label>
+
+        <input type="text" id="name" name="name" required
+               minlength="4" maxlength="8" size="10"> </h2>
+
+    <input type="submit" value="Envoyer le formulaire">
+
+</div>
+{% endblock %}

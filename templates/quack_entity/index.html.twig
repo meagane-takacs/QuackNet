@@ -5,6 +5,9 @@
 {% block body %}
     <h1>QuackEntity index</h1>
 
+    <a href="{{ path('user_show', {'id': app.user.id}) }}">Voir mon profil</a>
+
+
     <table class="table">
         <thead>
             <tr>

@@ -97,7 +97,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('quack'));
+        return new RedirectResponse($this->urlGenerator->generate('quack_entity_index'));
     }
 
     protected function getLoginUrl()
