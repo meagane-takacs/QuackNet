@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\QuackEntity;
+use App\Entity\User;
 use App\Form\QuackEntityType;
 use App\Repository\QuackEntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/quack/entity")
+ * @Route("/Quack")
  */
 class QuackEntityController extends AbstractController
 {
@@ -90,5 +91,22 @@ class QuackEntityController extends AbstractController
         }
 
         return $this->redirectToRoute('quack_entity_index');
+    }
+
+    public function admin(Request $request): Response
+    {
+        $quacks = $this->getDoctrine()->getRepository(QuackEntity::class)->findBy(
+            [],
+            ['datetime' => 'DESC']
+        );
+
+        $users = $this->getDoctrine()->getRepository((User::class))->findAll();
+
+        return $this->render('admin/index.html.twig', [
+            'quacks' => $quacks,
+            'users' => $users
+        ]);
+
+       //return $this->render('admin/test.html.twig', []);
     }
 }

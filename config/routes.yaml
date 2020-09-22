@@ -8,3 +8,7 @@ app_quack:
 #app_profil:
 #  path: /profil
 #  controller: App\Controller\ProfilController::index
+
+app_admin:
+  path: /admin
+  controller: App\Controller\QuackEntityController::admin
