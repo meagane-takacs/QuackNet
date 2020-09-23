@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\QuackEntity;
 use App\Entity\User;
+use App\Entity\Comment;
 use App\Form\QuackEntityType;
 use App\Repository\QuackEntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,10 +33,19 @@ class QuackEntityController extends AbstractController
     public function new(Request $request): Response
     {
         $quackEntity = new QuackEntity();
+
+        // Force author
+        $quackEntity->setAuthor($this->getUser()->getUsername());
+
         $form = $this->createForm(QuackEntityType::class, $quackEntity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Force date
+            $currentDateTime = new \DateTime();
+            $quackEntity->setDatetime($currentDateTime);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($quackEntity);
             $entityManager->flush();
@@ -49,14 +59,36 @@ class QuackEntityController extends AbstractController
         ]);
     }
 
+    public function getComments(QuackEntity $quackEntity)
+    {
+        $repository = $this->getDoctrine()->getRepository(Comment::class);
+
+        $comments = $repository->findBy(
+            ['id_post' => $quackEntity->getId()],
+            ['datetime' => "DESC"]
+        );
+
+        return $comments;
+    }
+
     /**
      * @Route("/{id}", name="quack_entity_show", methods={"GET"})
      */
     public function show(QuackEntity $quackEntity): Response
     {
+
+        $comments = $this->getComments($quackEntity);
+
         return $this->render('quack_entity/show.html.twig', [
             'quack_entity' => $quackEntity,
+            'comments' => $comments,
         ]);
+
+        /*
+         * return $this->render('quack_entity/index.html.twig', [
+            'quack_entities' => $quackEntityRepository->findAll(),
+        ]);
+         */
     }
 
     /**
@@ -78,6 +110,7 @@ class QuackEntityController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/{id}", name="quack_entity_delete", methods={"DELETE"})

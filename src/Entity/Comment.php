@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\QuackEntityRepository;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=QuackEntityRepository::class)
+ * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
-class QuackEntity
+class Comment
 {
     /**
      * @ORM\Id
@@ -18,9 +18,14 @@ class QuackEntity
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
     private $content;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $author;
 
     /**
      * @ORM\Column(type="datetime")
@@ -28,9 +33,9 @@ class QuackEntity
     private $datetime;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
-    private $author;
+    private $id_post;
 
     public function getId(): ?int
     {
@@ -49,18 +54,6 @@ class QuackEntity
         return $this;
     }
 
-    public function getDatetime(): ?\DateTimeInterface
-    {
-        return $this->datetime;
-    }
-
-    public function setDatetime(\DateTimeInterface $datetime): self
-    {
-        $this->datetime = $datetime;
-
-        return $this;
-    }
-
     public function getAuthor(): ?string
     {
         return $this->author;
@@ -73,5 +66,27 @@ class QuackEntity
         return $this;
     }
 
+    public function getDatetime(): ?\DateTimeInterface
+    {
+        return $this->datetime;
+    }
 
+    public function setDatetime(\DateTimeInterface $datetime): self
+    {
+        $this->datetime = $datetime;
+
+        return $this;
+    }
+
+    public function getIdPost(): ?int
+    {
+        return $this->id_post;
+    }
+
+    public function setIdPost(int $id_post): self
+    {
+        $this->id_post = $id_post;
+
+        return $this;
+    }
 }

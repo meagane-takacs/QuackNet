@@ -5,13 +5,18 @@
 {% block body %}
     <h1>QuackEntity index</h1>
 
-    <a href="{{ path('account') }}">Voir mon profil</a>
+    {% if app.user %}
+        <a href="{{ path('account') }}">Voir mon profil</a>
+    {% endif %}
+
+
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Content</th>
+                <th>Author</th>
                 <th>Created_at</th>
                 <th>actions</th>
             </tr>
@@ -21,10 +26,14 @@
             <tr>
                 <td>{{ quack_entity.id }}</td>
                 <td>{{ quack_entity.content }}</td>
+                <td>{{ quack_entity.author }}</td>
                 <td>{{ quack_entity.datetime ? quack_entity.datetime|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('quack_entity_show', {'id': quack_entity.id}) }}">show</a>
-                    <a href="{{ path('quack_entity_edit', {'id': quack_entity.id}) }}">edit</a>
+
+                    {% if app.user.username == quack_entity.author %}
+                        <a href="{{ path('quack_entity_edit', {'id': quack_entity.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -35,5 +44,14 @@
         </tbody>
     </table>
 
-    <a href="{{ path('quack_entity_new') }}">Create new</a>
+    {% if app.user %}
+        <a href="{{ path('quack_entity_new') }}">Create new</a>
+    {% endif %}
+
+    {% if not app.user %}
+           <a href="{{ path('app_login') }}">Login</a>
+    {% endif %}
+
+
+
 {% endblock %}
