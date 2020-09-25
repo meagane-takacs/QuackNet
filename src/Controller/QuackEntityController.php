@@ -9,6 +9,7 @@ use App\Form\ContactType;
 use App\Form\QuackEntityType;
 use App\Model\Contact;
 use App\Repository\QuackEntityRepository;
+use App\Service\ContactMailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -150,7 +151,7 @@ class QuackEntityController extends AbstractController
 
 
 
-    public function contact(Request $request, FlashBagInterface $flashBag)
+    public function contact(Request $request, FlashBagInterface $flashBag, ContactMailer $contactMailer)
     {
         $contact= new Contact();
         $form = $this->createForm(ContactType::class, $contact);
@@ -159,6 +160,9 @@ class QuackEntityController extends AbstractController
 
         if($form->isSubmitted() and $form->isValid())
         {
+
+            $contactMailer->send($contact);
+
          $flashBag->add("success", "Votre message a bien été envoyé");
 
          return $this->redirectToRoute('app_contact');
