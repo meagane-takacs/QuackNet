@@ -27,15 +27,25 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/{id_post}/new", name="comment_new", methods={"GET","POST"})
+     * @Route("/{quack_id}/new", name="comment_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
+
         $comment = new Comment();
 
         // Ce nouveau commentaire appartient a ce quack
-        $id_post = $request->attributes->get('id_post');
-        $comment->setIdPost($id_post);
+        //$quack_id = $request->attributes->get('quack_id');
+        //$comment->setQuackId($quack_id);
+        $quack_id = $request->attributes->get('quack_id');
+
+        $repository = $this->getDoctrine()->getRepository(QuackEntity::class);
+
+        $quackEntity = $repository->findOneBy(
+            ['id' => $quack_id]
+        );
+
+        $comment->setQuack( $quackEntity ) ;
 
         // Auteur du commentaire
         $comment->setAuthor($this->getUser()->getUsername());
@@ -53,7 +63,7 @@ class CommentController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('quack_entity_show', [ 'id' => $id_post]);
+            return $this->redirectToRoute('quack_entity_show', [ 'id' => $quack_id]);
         }
 
         return $this->render('comment/new.html.twig', [
@@ -83,8 +93,8 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            $id_post = $comment->getIdPost();
-            return $this->redirectToRoute('quack_entity_show', [ 'id' => $id_post]);
+            $quack_id = $comment->getIdPost();
+            return $this->redirectToRoute('quack_entity_show', [ 'id' => $quack_id]);
         }
 
         return $this->render('comment/edit.html.twig', [

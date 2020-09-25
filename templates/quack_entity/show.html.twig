@@ -29,7 +29,7 @@
         <a href="{{ path('quack_entity_edit', {'id': quack_entity.id}) }}">edit</a>
     {% endif %}
 
-    <a href="{{ path('comment_new', {'id_post': quack_entity.id}) }}">comment</a>
+    <a href="{{ path('comment_new', {'quack_id': quack_entity.id}) }}">comment</a>
 
     {{ include('quack_entity/_delete_form.html.twig') }}
 

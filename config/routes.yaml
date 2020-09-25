@@ -12,3 +12,7 @@ app_quack:
 app_admin:
   path: /admin
   controller: App\Controller\QuackEntityController::admin
+
+app_contact:
+  path: /contact
+  controller: App\Controller\QuackEntityController::contact

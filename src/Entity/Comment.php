@@ -35,7 +35,13 @@ class Comment
     /**
      * @ORM\Column(type="integer")
      */
-    private $id_post;
+    private $quack_id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=QuackEntity::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Quack;
 
     public function getId(): ?int
     {
@@ -78,14 +84,26 @@ class Comment
         return $this;
     }
 
-    public function getIdPost(): ?int
+    public function getQuackId(): ?int
     {
-        return $this->id_post;
+        return $this->quack_id;
     }
 
-    public function setIdPost(int $id_post): self
+    public function setQuackId(int $quack_id): self
     {
-        $this->id_post = $id_post;
+        $this->quack_id = $quack_id;
+
+        return $this;
+    }
+
+    public function getQuack(): ?QuackEntity
+    {
+        return $this->Quack;
+    }
+
+    public function setQuack(?QuackEntity $Quack): self
+    {
+        $this->Quack = $Quack;
 
         return $this;
     }

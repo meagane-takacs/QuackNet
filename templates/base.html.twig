@@ -4,6 +4,13 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        {% if app.user %}
+            Vous êtes connecté en tant que {{ app.user.username }}
+            <p>
+                <img width="5%" src="https://easypdf.com/images/easypdf-logo-256.png" alt="exemple de texte alternatif"/>
+            </p>
+        {% endif %}
+
     </head>
     <body>
         {% block body %}{% endblock %}
